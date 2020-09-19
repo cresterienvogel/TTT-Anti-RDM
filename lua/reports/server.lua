@@ -12,26 +12,26 @@ function Reports.Confirm(attacker, victim)
 			XPA.Ban(attacker, 1440, "RDM x6")
 			return
 		end
-    end
+	end
 
 	victim.RoundsToPass = 3
 	victim.CanReport = false
-    attacker.AmountToPunish = attacker.AmountToPunish + 1
+	attacker.AmountToPunish = attacker.AmountToPunish + 1
 	attacker:ChatPrint(victim:Name() .. " decided that your kill was RDM")
 end
 
 net.Receive("Reports Add", function(_, pl)
-    local attacker = net.ReadEntity()
-    if not IsValid(attacker) or pl.KilledBy ~= attacker then
-        return
+	local attacker = net.ReadEntity()
+	if not IsValid(attacker) or pl.KilledBy ~= attacker then
+		return
 	end
 	Reports.Confirm(attacker, pl)
 end)
 
 hook.Add("PlayerDeath", "Reports", function(victim, _, attacker)
-    if not IsValid(attacker) or not attacker:IsPlayer() or attacker:IsTraitor() or victim == attacker then
-        return
-    end
+	if not IsValid(attacker) or not attacker:IsPlayer() or attacker:IsTraitor() or victim == attacker then
+		return
+	end
 	
 	if not victim.CanReport then
 		return
@@ -41,10 +41,10 @@ hook.Add("PlayerDeath", "Reports", function(victim, _, attacker)
 		return
 	end
 
-    victim.KilledBy = attacker
-    net.Start("Reports Choice")
-        net.WriteEntity(attacker)
-    net.Send(victim)
+	victim.KilledBy = attacker
+	net.Start("Reports Choice")
+		net.WriteEntity(attacker)
+	net.Send(victim)
 end)
 
 hook.Add("PlayerInitialSpawn", "Reports", function(pl)
