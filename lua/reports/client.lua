@@ -14,7 +14,7 @@ net.Receive("Reports Choice", function()
         net.Start("Reports Add")
             net.WriteEntity(attacker)
         net.SendToServer()
-		fr:Remove()
+	fr:Remove()
     end
 
     local cancel = vgui.Create("XPButton", fr)
